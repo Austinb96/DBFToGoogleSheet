@@ -2,15 +2,20 @@
 from dbfread import DBF
 import gspread
 from gspread_dataframe import set_with_dataframe
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # File for Importing
-filePath = ''
+filePath = config['DEFAULT']['importFile']
 # Sheet Key
-key = ""
+key = config['DEFAULT']['key']
 # Worksheet you are working on
-worksheetName = ""
+worksheetName = config['DEFAULT']['worksheetName']
 # Columns to keep
-columnsToKeep = ['']
+columnsToKeep = config['DEFAULT']['columnsToKeep'].split(',')
+columnsToKeep = [i.strip('""') for i in columnsToKeep]
 
 sa = gspread.service_account(filename='service_account.json')
 
